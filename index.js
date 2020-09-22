@@ -6,7 +6,8 @@ var router = require('./lib/router').create({
 async function monitor(){
   var lastCell;
   var tk=await router.getToken();
-  await router.login(tk,"admin","anthony1");
+  await router.login(tk,"admin","superpassword");
+  var ret =await router.sendSMS("0600000000","Demo Started",tk);
   setInterval(async ()=>{
     await router.ping(tk);
     ret=await router.getNotifications(tk);
