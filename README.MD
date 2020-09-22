@@ -1,8 +1,10 @@
 # Simple lightweight API for Huawei Router B715 (perhaps works for more models but only tested on 715)
 
+## INSTALLATION ##
+
 npm install b715_api
 
-Router exposed functions:
+## Router exposed functions ##
 
   * getToken
   * login
@@ -27,6 +29,8 @@ Router exposed functions:
 
 
 Look at the example.js to get inspiration, have fun !
+
+## SAMPLE CODE ##
 
 ```javascript
 var router = require('b715_api').create({
