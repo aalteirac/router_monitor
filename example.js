@@ -1,4 +1,4 @@
-var router = require('./lib/router').create({
+var router = require('b715_API').create({
     gateway: '192.168.8.1'
   });
 
@@ -6,8 +6,9 @@ var router = require('./lib/router').create({
 async function monitor(){
   var lastCell;
   var tk=await router.getToken();
-  await router.login(tk,"admin","superpassword");
+  await router.login(tk,"admin","superpasswordheydamncool");
   var ret =await router.sendSMS("0600000000","Demo Started",tk);
+  console.log("sendSMS",ret.response || ret.error);
   setInterval(async ()=>{
     await router.ping(tk);
     ret=await router.getNotifications(tk);

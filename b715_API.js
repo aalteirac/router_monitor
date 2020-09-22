@@ -1,9 +1,9 @@
-var endpoints = require('./endpoints');
+var endpoints = require('./lib/endpoints');
 var url = require('url-join');
 require('default');
 var _this;
 
-function b715(options) {
+function b715_API(options) {
   this.options = {
     gateway: '192.168.8.1'
   };
@@ -11,16 +11,16 @@ function b715(options) {
   _this=this;
 }
 function create(options) {
-  return new b715(options);
+  return new b715_API(options);
 }
-var exposed = b715.prototype;
-module.exports = b715;
+var exposed = b715_API.prototype;
+module.exports = b715_API;
 module.exports.create = create;
 
 exposed.getToken = function (token={}) {
   return new Promise((resolve,reject)=>{
     var uri = url('http://', _this.options.gateway, '/api/webserver/SesTokInfo');
-    endpoints.contactRouter(uri, token, null, function (error, response) {
+    endpoints.sendRequest(uri, token, null, function (error, response) {
       if (response !== null) {
         resolve({
           cookies: "SessionID="+response.SesInfo[0] + "; "+"SessionID="+response.SesInfo[0],
@@ -43,7 +43,7 @@ exposed.login = function (token, username, password) {
         username + endpoints.hashPassword(password) + token.token
       )
     };
-    endpoints.contactRouter(uri, token, body, function (error, response) {
+    endpoints.sendRequest(uri, token, body, function (error, response) {
       resolve({response:response,error:error});
     });
   })
@@ -52,7 +52,7 @@ exposed.login = function (token, username, password) {
 exposed.ping = function (token) {
   return new Promise((resolve,reject)=>{
     var uri = url('http://', this.options.gateway, '/api/user/state-login');
-    endpoints.contactRouter(uri, token, null, function (error, response) {
+    endpoints.sendRequest(uri, token, null, function (error, response) {
       resolve({response:response,error:error});
     });
   })
@@ -65,7 +65,7 @@ exposed.requestReboot = function (tok, control=1) {
     var body = {
       Control:control
     }
-    endpoints.contactRouter(uri, token, body, function (error, response) {
+    endpoints.sendRequest(uri, token, body, function (error, response) {
       resolve({response:response,error:error});
     });
   })
@@ -84,7 +84,7 @@ exposed.markAsRead = function (id,tok) {
         toDel=`${toDel}<Index>${id}</Index>`
       })
       var body =`<?xml version="1.0" encoding="UTF-8"?><request>${toDel}</request>`
-      endpoints.contactRouter(uri, token, body, function (error, response) {
+      endpoints.sendRequest(uri, token, body, function (error, response) {
         resolve({response:response,error:error});
       });
   })
@@ -112,7 +112,7 @@ exposed.getSMSListPage = function (box,tok,page=1) {
         Ascending:0,
         UnreadPreferred:0
       };
-      endpoints.contactRouter(uri, token, body, async function (error, response) {
+      endpoints.sendRequest(uri, token, body, async function (error, response) {
         if(response && response.Messages[0] && response.Messages[0].Message){
           resolve({response:response.Messages[0].Message,error:error})
         }
@@ -136,7 +136,7 @@ exposed.sendSMS = function (tels,text,tok) {
       telList=`${telList}<Phone>${tel}</Phone>`
     })
     var body =`<?xml version="1.0" encoding="UTF-8"?><request><Index>-1</Index><Phones>${telList}</Phones><Sca /><Content>${text}</Content><Length>${text.length}</Length><Reserved>1</Reserved><Date>2020-09-22 17:49:45</Date></request>`
-    endpoints.contactRouter(uri, token, body, function (error, response) {
+    endpoints.sendRequest(uri, token, body, function (error, response) {
       resolve({response:response,error:error});
     });
   })  
@@ -155,7 +155,7 @@ exposed.deleteSMS = function (id,tok) {
       toDel=`${toDel}<Index>${id}</Index>`
     })
     var body =`<?xml version="1.0" encoding="UTF-8"?><request>${toDel}</request>`
-    endpoints.contactRouter(uri, token, body, function (error, response) {
+    endpoints.sendRequest(uri, token, body, function (error, response) {
       resolve({response:response,error:error});
     });
   })  
@@ -164,7 +164,7 @@ exposed.deleteSMS = function (id,tok) {
 exposed.getNotifications = function (token) {
   return new Promise(async (resolve,reject)=>{
     var uri = url('http://', this.options.gateway, '/api/monitoring/check-notifications');
-    endpoints.contactRouter(uri, token, null, function (error, response) {
+    endpoints.sendRequest(uri, token, null, function (error, response) {
       resolve({response:response,error:error});
     });
   })
@@ -179,7 +179,7 @@ exposed.setRadioSettings = function (tok, networkMode, networkBand, lteBand) {
       NetworkMode:networkMode,
       NetworkBand:networkBand
     }
-    endpoints.contactRouter(uri, token, body, function (error, response) {
+    endpoints.sendRequest(uri, token, body, function (error, response) {
       resolve({response:response,error:error});
     });
   })
@@ -188,7 +188,7 @@ exposed.setRadioSettings = function (tok, networkMode, networkBand, lteBand) {
 exposed.getRadioSettings = function (token) {
   return new Promise(async (resolve,reject)=>{
     var uri = url('http://', this.options.gateway, '/api/net/net-mode');
-    endpoints.contactRouter(uri, token, null, function (error, response) {
+    endpoints.sendRequest(uri, token, null, function (error, response) {
       resolve({response:response,error:error});
     });
   });
@@ -197,7 +197,7 @@ exposed.getRadioSettings = function (token) {
 exposed.getMonthStatistics = function (token) {
   return new Promise(async (resolve,reject)=>{
     var uri = url('http://', this.options.gateway, '/api/monitoring/month_statistics');
-    endpoints.contactRouter(uri, token, null, function (error, response) {
+    endpoints.sendRequest(uri, token, null, function (error, response) {
       resolve({response:response,error:error});
     });
   });
@@ -206,7 +206,7 @@ exposed.getMonthStatistics = function (token) {
 exposed.getSignal = function (token) {
   return new Promise(async (resolve,reject)=>{
     var uri = url('http://', this.options.gateway, '/api/device/signal');
-    endpoints.contactRouter(uri, token, null, function (error, response) {
+    endpoints.sendRequest(uri, token, null, function (error, response) {
       resolve({response:response,error:error});
     });
   });
@@ -215,7 +215,7 @@ exposed.getSignal = function (token) {
 exposed.getStatus = function (token) {
   return new Promise(async (resolve,reject)=>{
     var uri = url('http://', this.options.gateway, '/api/monitoring/status');
-    endpoints.contactRouter(uri, token, null, function (error, response) {
+    endpoints.sendRequest(uri, token, null, function (error, response) {
       resolve({response:response,error:error});
     });
   });
@@ -224,7 +224,7 @@ exposed.getStatus = function (token) {
 exposed.getTrafficStatistics = function (token) {
   return new Promise(async (resolve,reject)=>{
     var uri = url('http://', this.options.gateway, '/api/monitoring/traffic-statistics');
-    endpoints.contactRouter(uri, token, null, function (error, response) {
+    endpoints.sendRequest(uri, token, null, function (error, response) {
       resolve({response:response,error:error});
     });
   });
@@ -233,7 +233,7 @@ exposed.getTrafficStatistics = function (token) {
 exposed.getBasicSettings = function (token) {
   return new Promise(async (resolve,reject)=>{
     var uri = url('http://', this.options.gateway, '/api/wlan/basic-settings');
-    endpoints.contactRouter(uri, token, null, function (error, response) {
+    endpoints.sendRequest(uri, token, null, function (error, response) {
       resolve({response:response,error:error});
     });
   });
@@ -242,7 +242,7 @@ exposed.getBasicSettings = function (token) {
 exposed.getInformation = function (token) {
   return new Promise(async (resolve,reject)=>{
     var uri = url('http://', this.options.gateway, '/api/device/information');
-    endpoints.contactRouter(uri, token, null, function (error, response) {
+    endpoints.sendRequest(uri, token, null, function (error, response) {
       resolve({response:response,error:error});
     });
   });
@@ -251,7 +251,7 @@ exposed.getInformation = function (token) {
 exposed.getProfiles = function (token) {
   return new Promise(async (resolve,reject)=>{
     var uri = url('http://', this.options.gateway, '/api/dialup/profiles');
-    endpoints.contactRouter(uri, token, null, function (error, response) {
+    endpoints.sendRequest(uri, token, null, function (error, response) {
       resolve({response:response,error:error});
     });
   });
@@ -260,7 +260,7 @@ exposed.getProfiles = function (token) {
 exposed.getCurrentPLMN = function (token) {
   return new Promise(async (resolve,reject)=>{
     var uri = url('http://', this.options.gateway, '/api/net/current-plmn');
-    endpoints.contactRouter(uri, token, null, function (error, response) {
+    endpoints.sendRequest(uri, token, null, function (error, response) {
       resolve({response:response,error:error});
     });
   });
