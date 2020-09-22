@@ -1,6 +1,30 @@
-# Simple lightweight API for Huawei Routeur B715 (perhaps works for more models but only tested on 715)
+# Simple lightweight API for Huawei Router B715 (perhaps works for more models but only tested on 715)
 
 npm install b715_api
+
+Router exposed functions:
+
+  getToken
+  login
+  ping
+  requestReboot
+  markAsRead
+  getSMSList
+  getSMSListPage
+  sendSMS
+  deleteSMS
+  getNotifications
+  setRadioSettings
+  getRadioSettings
+  getMonthStatistics
+  getSignal
+  getStatus
+  getTrafficStatistics
+  getBasicSettings
+  getInformation
+  getProfiles
+  getCurrentPLMN
+
 
 Look at the example.js to get inspiration, have fun !
 
