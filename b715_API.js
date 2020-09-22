@@ -3,7 +3,7 @@ var url = require('url-join');
 require('default');
 var _this;
 
-function b715_API(options) {
+function b715_api(options) {
   this.options = {
     gateway: '192.168.8.1'
   };
@@ -11,10 +11,10 @@ function b715_API(options) {
   _this=this;
 }
 function create(options) {
-  return new b715_API(options);
+  return new b715_api(options);
 }
-var exposed = b715_API.prototype;
-module.exports = b715_API;
+var exposed = b715_api.prototype;
+module.exports = b715_api;
 module.exports.create = create;
 
 exposed.getToken = function (token={}) {

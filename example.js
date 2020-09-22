@@ -1,4 +1,4 @@
-var router = require('b715_API').create({
+var router = require('b715_api').create({
     gateway: '192.168.8.1'
   });
 
