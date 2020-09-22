@@ -4,7 +4,7 @@
 
 npm install b715_api
 
-## Router exposed functions ##
+## ROUTER EXPOSED FUNCTIONS ##
 
   * getToken
   * login
