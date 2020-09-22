@@ -1,6 +1,6 @@
 {
   "name": "b715_api",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "b715_api.js",
   "scripts": {
@@ -15,6 +15,11 @@
   "bugs": {
     "url": "https://github.com/aalteirac/router_monitor/issues"
   },
+  "keywords": [
+    "router",
+    "huawei",
+    "b715"
+  ],
   "homepage": "https://github.com/aalteirac/router_monitor#readme",
   "dependencies": {
     "crypto": "^1.0.1",
