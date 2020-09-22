@@ -90,6 +90,7 @@ async function deleteReadSMS(token,mess){
   })
   if(toDel.length>0){
     var ret=await router.deleteSMS(toDel,token);
+    //DELETE SMS
     console.log("deleteSMS",ret.response || ret.error);
   }
 }
