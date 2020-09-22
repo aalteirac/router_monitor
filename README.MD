@@ -4,26 +4,26 @@ npm install b715_api
 
 Router exposed functions:
 
-  getToken
-  login
-  ping
-  requestReboot
-  markAsRead
-  getSMSList
-  getSMSListPage
-  sendSMS
-  deleteSMS
-  getNotifications
-  setRadioSettings
-  getRadioSettings
-  getMonthStatistics
-  getSignal
-  getStatus
-  getTrafficStatistics
-  getBasicSettings
-  getInformation
-  getProfiles
-  getCurrentPLMN
+  * getToken
+  * login
+  * ping
+  * requestReboot
+  * markAsRead
+  * getSMSList
+  * getSMSListPage
+  * sendSMS
+  * deleteSMS
+  * getNotifications
+  * setRadioSettings
+  * getRadioSettings
+  * getMonthStatistics
+  * getSignal
+  * getStatus
+  * getTrafficStatistics
+  * getBasicSettings
+  * getInformation
+  * getProfiles
+  * getCurrentPLMN
 
 
 Look at the example.js to get inspiration, have fun !
